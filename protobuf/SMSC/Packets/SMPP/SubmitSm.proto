@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package SMSC.Protobuf.SMPP;
+
+import "Definition.proto";
+
+message Submit_Sm_Req {
+  string smsc_unique_id = 1;
+
+  string cp_system_id = 2;
+
+  SMPP_SM smpp = 3;
+
+  Message_Body body = 4;
+
+  bool ignore_user_validity_period = 5;
+  int32 max_submit_validity_period = 6;
+  int32 max_delivery_report_validity_period = 7;
+
+  SMPP_MESSAGE_ID_TYPE submit_resp_message_id_type = 8;
+  SMPP_MESSAGE_ID_TYPE delivery_report_message_id_type = 9;
+
+  float source_charging_rate = 10;
+  float dest_charging_rate = 11;
+}
+
+message Submit_Sm_Resp {
+  string smsc_unique_id = 1;
+
+  string md_message_id = 2;
+  int32 error_code = 3;
+}

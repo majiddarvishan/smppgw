@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package pa.paper.cra.proto;
+
+enum Status {
+  STATUS_SUCCESS = 0;
+  STATUS_ALREADY_EXIST = 1;
+  STATUS_NOT_EXIST = 2;
+  STATUS_SYSTEM_ERROR = 3;
+}
+
+message BlockReq {
+  string msisdn = 1;
+}
+
+message BlockResp {
+  Status status = 1;
+  int64 rule_id = 2;
+  string error_desc = 3;
+}
+
+message UnblockReq {
+  string msisdn = 1;
+}
+
+message UnblockResp {
+  Status status = 1;
+  string error_desc = 2;
+}
+
+message MessageCountReq {
+  string msisdn = 1;
+}
+
+message MessageCountResp {
+  Status status = 1;
+  uint32 count = 2;
+  string error_desc = 3;
+}
+
+message MessageInfo {
+  uint32 received_time = 1;
+  string source_address = 2;
+  uint32 data_coding = 3;
+  uint32 total_parts_count = 4;
+  uint32 part_number = 5;
+  string body = 6;
+}
+
+message GetMessageReq {
+  string msisdn = 1;
+  uint32 begin = 2;
+}
+
+message GetMessageResp {
+  Status status = 1;
+  string error_desc = 2;
+  repeated MessageInfo messages = 3;
+}
+
+// https://protobuf.dev/programming-guides/proto3/#oneof
+message Request {
+  oneof request_oneof {
+    BlockReq block_req = 1;
+    UnblockReq unblock_req = 2;
+    MessageCountReq message_count_req = 3;
+    GetMessageReq get_message_req = 4;
+  }
+}
+
+message Response {
+  oneof response_oneof {
+    BlockResp block_resp = 1;
+    UnblockResp unblock_resp = 2;
+    MessageCountResp message_count_resp = 3;
+    GetMessageResp get_message_resp = 4;
+  }
+}

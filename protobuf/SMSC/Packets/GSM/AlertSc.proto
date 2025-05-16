@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package SMSC.Protobuf.GSM;
+
+import "Definition.proto";
+
+message Alert_sc_Req {
+  Address service_center_addr = 2;
+  Address msisdn = 3;
+}
+
+message Alert_sc_Resp {
+  int32 error_code = 2;
+}

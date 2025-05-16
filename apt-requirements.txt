@@ -1,0 +1,18 @@
+prometheus-cpp
+cppkafka
+pa-routing-2.3
+pa-thread-pool-2.3
+pa-managed-object-web-server-1.7
+libcurl4-gnutls-dev
+smsc-network-interface-1.2
+libqt5network5
+qt5-default
+libboost-filesystem-dev
+librdkafka-dev
+
+# added by mshadow and these system dependencies should be check later
+llog4cxxlib
+lsnmplib
+lxerceslib
+lxqillalib
+lcryptolib

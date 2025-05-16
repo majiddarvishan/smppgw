@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package SMSC.Protobuf.GSM;
+
+import "Definition.proto";
+
+message RSDS_Req {
+  string smsc_unique_id = 1;
+
+  Address msisdn = 2;
+  Address service_center_addr = 3;
+  int32 sm_delivery_outcome = 4;
+  int32 absent_subscriber_diagnostic_sm = 5;
+
+  Address source_addr = 6;
+}
+
+message RSDS_Resp {
+  string smsc_unique_id = 1;
+
+  Address msisdn = 2;
+  int32 error_code = 3;
+}

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package SMSC.Protobuf.GSM;
+
+import "Definition.proto";
+
+message SRI_For_Sm_Req {
+  string smsc_unique_id = 1;
+  uint32 smrp_pri = 2;
+  Address service_center_addr = 3;
+  Address originating_addr = 4;
+  Address destination_addr = 5;
+}
+
+message SRI_For_Sm_Resp {
+  string smsc_unique_id = 1;
+  string imsi = 2;
+  Address msc = 3;
+  Address vlr = 4;
+  int32 user_error = 5;
+  int32 provider_error = 6;
+}

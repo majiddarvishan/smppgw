@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package pa.paper.proto;
+
+enum FirewallMsgType {
+  FMT_UNKNOWN = 0;
+  FMT_AO_AT = 1;
+  FMT_AO_MT = 2;
+  FMT_MO_AT = 3;
+  FMT_MO_MT = 4;
+}
+
+message FirewallRequest {
+  FirewallMsgType msg_type = 1;
+  string msg_id = 2;
+  string cp_system_id = 3;
+  string source_address = 4;
+  string destination_address = 5;
+  uint32 total_parts = 6;
+  uint32 part_number = 7;
+  uint32 part_id = 8;
+  uint32 dcs = 9;
+  string body = 10;
+}
+
+enum FirewallAction {
+  FA_BLOCK = 0;
+  FA_SEND = 1;
+}
+
+message FirewallResponse {
+  bool submit_ack = 1;
+  bool deliver_status = 2;
+  bool delivery_report = 3;
+  bool delivery_report_status = 4;
+  bool check_credit = 5;
+  string new_body = 6;
+  string new_destination_address = 7;
+  uint32 delay = 8;
+  repeated uint32 fw_rules = 9;
+  FirewallAction fw_action = 10;
+}
+
+service FirewallService {
+  rpc UnaryConnection (FirewallRequest) returns (FirewallResponse);
+}

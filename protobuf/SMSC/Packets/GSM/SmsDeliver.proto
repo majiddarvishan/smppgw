@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package SMSC.Protobuf.GSM;
+
+import "Definition.proto";
+
+message Sms_Deliver_Req {
+  string smsc_unique_id = 1;
+
+  bool more_message_to_send = 2;
+  Address smrp_originating_addr = 3;
+  Address smrp_destination_addr = 4;
+
+  Address originating_sccp_addr = 5;
+  Address destination_sccp_addr = 6;
+
+  bool reply_path_flag = 7;
+  bool user_data_header_indicator = 8;
+
+  int32 status_report_request = 9;
+
+  Address source_addr = 10;
+  Address destination_addr = 11;
+
+  Address real_source_addr = 12;
+
+  int32 protocol_id = 13;
+  int32 service_centre_time_stamp = 14;
+
+  Message_Body body = 15;
+
+  int32 original_tcap_dialog_id = 16; // for using in MD
+}
+
+message Sms_Deliver_Resp {
+  string smsc_unique_id = 1;
+  int32 protocol_id = 2;
+  int32 user_error = 3;
+  int32 provider_error = 4;
+
+  int32 mw_set_indication = 5;
+
+  string imsi = 6;
+  Address msc = 7;
+  Address vlr = 8;
+
+  int32 original_tcap_dialog_id = 9;
+}

@@ -1,0 +1,160 @@
+syntax = "proto3";
+
+package SMSC.Protobuf;
+
+enum GSM_MESSAGE_TYPE {
+  UNKNOWN_GSM_TYPE = 0;
+
+  MO_REQ_TYPE = 68;
+  MO_RESP_TYPE = 65;
+
+  MT_REQ_TYPE = 70;
+  MT_RESP_TYPE = 64;
+
+  STATUS_REPORT_REQ_TYPE = 71;
+  STATUS_REPORT_RESP_TYPE = 100;
+
+  SRI_FOR_SM_REQ_TYPE = 10;
+  SRI_FOR_SM_RESP_TYPE = 11;
+
+  RSDS_REQ_TYPE = 35;
+  RSDS_RESP_TYPE = 36;
+
+  ALERT_SC_REQ_TYPE = 9;
+  ALERT_SC_RESP_TYPE = 37;
+
+  ATI_REQ_TYPE = 21;
+  ATI_RESP_TYPE = 22;
+
+  PSI_REQ_TYPE = 17;
+  PSI_RESP_TYPE = 18;
+
+  PSL_REQ_TYPE = 19;
+  PSL_RESP_TYPE = 20;
+}
+
+enum SMPP_MESSAGE_TYPE {
+  UNKNOWN_SMPP_TYPE = 0;
+
+  AO_REQ_TYPE = 0x00000004;
+  AO_RESP_TYPE = 0x10000004;
+
+  AT_REQ_TYPE = 0x00000005;
+  AT_RESP_TYPE = 0x10000005;
+
+  DR_REQ_TYPE = 0x00000015;
+  DR_RESP_TYPE = 0x10000015;
+}
+
+enum BIND_TYPE {
+  BT_UNBOUND = 0;
+  BT_RX = 1;
+  BT_TX = 2;
+  BT_TRX = 4;
+}
+
+message Message_TLV {
+  int32 type = 1;
+  int32 len = 2;
+  bytes value = 3;
+}
+
+message Message_Body {
+  int32 more_messages_to_send = 1;
+
+  int32 data_coding = 2;
+  DataCodingType data_coding_type = 3;
+
+  int32 sar_msg_ref_num = 4;
+  int32 sar_total_segments = 5;
+  int32 sar_segment_seqnum = 6;
+  bytes header = 7;
+  bytes short_message = 8;
+}
+
+message Address {
+  int32 addr_ton = 1;
+  int32 addr_npi = 2;
+  string addr_value = 3;
+}
+
+enum StatusReportRequest {
+  NEVER = 0;
+  ALWAYS = 1;
+  ON_FAILED = 2;
+  ON_SUCCESS = 3;
+}
+
+enum DataCodingType {
+  UNKNOWN = 0;
+  DEFAULT_ALPHABET = 1;
+  EIGTH_BIT_DATA = 2;
+  EIGTH_BIT_ASCII = 3;
+  SIXTEEN_BIT_DATA = 4;
+  RESERVED = 5;
+}
+
+enum SMPP_MESSAGE_ID_TYPE {
+  DEC = 0;
+  HEX = 1;
+}
+
+message SMPP_SM {
+  string service_type = 1;
+  int32 source_addr_ton = 2;
+  int32 source_addr_npi = 3;
+  string source_addr = 4;
+  int32 dest_addr_ton = 5;
+  int32 dest_addr_npi = 6;
+  string dest_addr = 7;
+  int32 esm_class = 8;
+  int32 protocol_id = 9;
+  int32 priority_flag = 10;
+  int32 schedule_delivery_time = 11;
+  int32 validity_period = 12;
+  int32 registered_delivery = 13;
+  int32 replace_if_present_flag = 14;
+  int32 sm_default_msg_id = 15;
+  repeated Message_TLV tags = 16;
+}
+
+enum validity_period_format {
+    not_present = 0x00;
+    relative    = 0x10;
+    enhanced    = 0x08;
+    absolute    = 0x18;
+}
+
+enum  protocol_id_type {
+  ms_to_sc                     = 0x00;
+  implicit                     = 0x20;
+  telex                        = 0x21;
+  telefax_group_3              = 0x22;
+  telefax_group_4              = 0x23;
+  voice_telephone              = 0x24;
+  ermes                        = 0x25;
+  national_aging_system        = 0x26;
+  videotex                     = 0x27;
+  teletex_carrier_unspecified  = 0x28;
+  teletex_in_pspdn             = 0x29;
+  teletex_in_cspdn             = 0x2A;
+  teletex_in_analog_pstn       = 0x2B;
+  teletex_in_digital_isdn      = 0x2C;
+  uci                          = 0x2D;
+  message_handling_facility    = 0x30;
+  public_x400_based_message    = 0x31;
+  internet_electronic_mail     = 0x32;
+  gsm_mobile_station           = 0x3F;
+  short_message_type_0         = 0x40;
+  replace_short_message_type_1 = 0x41;
+  replace_short_message_type_2 = 0x42;
+  replace_short_message_type_3 = 0x43;
+  replace_short_message_type_4 = 0x44;
+  replace_short_message_type_5 = 0x45;
+  replace_short_message_type_6 = 0x46;
+  replace_short_message_type_7 = 0x47;
+  return_call_message          = 0x5F;
+  me_data_download             = 0x7D;
+  me_de_personalization_short_message = 0x7E;
+  sim_data_download            = 0x7F;
+}

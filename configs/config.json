@@ -1,0 +1,244 @@
+{
+  "config_server": {
+    "port": 8080,
+    "api_key": "test"
+  },
+  "logging": {
+    "level": "debug",
+    "output_mode": "console",
+    "file_name": "app.log",
+    "max_file_size": 10,
+    "max_files": 4
+  },
+  "smpp_gateway": {
+    "prometheus": {
+      "address": "0.0.0.0:9999",
+      "labels": [
+        {
+          "key": "instance",
+          "value": "smpp_gateway"
+        },
+        {
+          "key": "ip",
+          "value": "127.0.0.1"
+        },
+        {
+          "key": "node_name",
+          "value": "VSSKZD"
+        }
+      ]
+    },
+    "policy": {
+      "name": "sgw_1",
+      "address": [
+        "127.0.0.1:5701"
+      ],
+      "timeout": 10
+    },
+    "logger": {
+      "ao_logger": {
+        "enabled": true,
+        "file_mode": "text",
+        "file_name_format": "AO-%Y%M%d%h%m%s%S-%n.csv",
+        "create_path": "log/open",
+        "close_path": "log/close",
+        "buffer_size": 1000,
+        "records_threshold": 10000,
+        "time_threshold": 86400
+      },
+      "at_logger": {
+        "enabled": true,
+        "file_mode": "text",
+        "file_name_format": "AT-%Y%M%d%h%m%s%S-%n.csv",
+        "create_path": "log/open",
+        "close_path": "log/close",
+        "buffer_size": 1000,
+        "records_threshold": 10000,
+        "time_threshold": 86400
+      },
+      "dr_logger": {
+        "enabled": true,
+        "file_mode": "text",
+        "file_name_format": "DR-%Y%M%d%h%m%s%S-%n.csv",
+        "create_path": "log/open",
+        "close_path": "log/close",
+        "buffer_size": 1000,
+        "records_threshold": 10000,
+        "time_threshold": 86400
+      },
+      "reject_logger": {
+        "enabled": true,
+        "file_mode": "text",
+        "file_name_format": "Reject-%Y%M%d%h%m%s%S-%n.csv",
+        "create_path": "reject/open",
+        "close_path": "reject/close",
+        "buffer_size": 1000,
+        "records_threshold": 10000,
+        "time_threshold": 86400
+      },
+      "tracer": {
+        "enabled": false,
+        "brokers": "192.168.100.13",
+        "topic": "tracer1"
+      }
+    },
+    "smpp_server": {
+      "ip": "0.0.0.0",
+      "port": 4000,
+      "system_id": "SmppServer",
+      "session_init_timeout": 1000,
+      "enquire_link_timeout": 5000,
+      "inactivity_timeout": 2000,
+      "external_client": [
+        {
+          "system_id": "smpp_client_0",
+          "permitted_bind_types": [
+            "TRX",
+            "TX",
+            "RX"
+          ],
+          "system_type": "smpp",
+          "password": "pass",
+          "require_password_checking": false,
+          "require_ip_checking": false,
+          "ip_addresses": [
+            "192.168.21.198",
+            "128.0.0.1"
+          ],
+          "ip_mask": "NULL",
+          "submit_resp_msg_id_base": "dec",
+          "delivery_report_msg_id_base": "dec",
+          "ignore_user_validity_period": true,
+          "submit_validity_period": 1000,
+          "delivery_report_validity_period": 1000,
+          "dialog_timeout": 30,
+          "status_report_state_generator": false,
+          "status_report_state": "never",
+          "source_address_check": false,
+          "source_ton_npi_check": false,
+          "destination_address_check": false,
+          "destination_ton_npi_check": false,
+          "dcs_check": false,
+          "black_white_check": false,
+          "max_session": 2,
+          "receive_flow_control": {
+            "flow_method": "disabled",
+            "max_packets_per_second": 1000,
+            "should_reject_packet": true,
+            "credit_windows_size": 5,
+            "max_slippage": 100
+          },
+          "send_flow_control": {
+            "flow_method": "disabled",
+            "max_packets_per_second": 1000,
+            "credit_windows_size": 5,
+            "max_slippage": 100
+          }
+        },
+        {
+          "system_id": "smpp_client_1",
+          "permitted_bind_types": [
+            "TRX",
+            "TX",
+            "RX"
+          ],
+          "system_type": "smpp",
+          "password": "pass",
+          "require_password_checking": false,
+          "require_ip_checking": false,
+          "ip_addresses": [
+            "127.0.0.1",
+            "127.33.33.1"
+          ],
+          "ip_mask": "NULL",
+          "submit_resp_msg_id_base": "dec",
+          "delivery_report_msg_id_base": "dec",
+          "ignore_user_validity_period": true,
+          "submit_validity_period": 1000,
+          "delivery_report_validity_period": 1000,
+          "dialog_timeout": 30,
+          "status_report_state_generator": false,
+          "status_report_state": "never",
+          "source_address_check": false,
+          "source_ton_npi_check": false,
+          "destination_address_check": false,
+          "destination_ton_npi_check": false,
+          "dcs_check": false,
+          "black_white_check": false,
+          "max_session": 2,
+          "receive_flow_control": {
+            "flow_method": "disabled",
+            "max_packets_per_second": 1000,
+            "should_reject_packet": true,
+            "credit_windows_size": 5,
+            "max_slippage": 100
+          },
+          "send_flow_control": {
+            "flow_method": "disabled",
+            "max_packets_per_second": 1000,
+            "credit_windows_size": 5,
+            "max_slippage": 100
+          }
+        }
+      ],
+      "routing": {
+        "reverse": false,
+        "routes": [
+          {
+            "id": 1,
+            "priority": 1,
+            "from": "",
+            "source_address": "",
+            "destination_address": "982000*",
+            "pdu_type": "deliver",
+            "target": "smpp_client_0"
+          },
+          {
+            "id": 2,
+            "priority": 1,
+            "from": "",
+            "source_address": "",
+            "destination_address": "983000*",
+            "pdu_type": "deliver",
+            "target": "smpp_client_1"
+          }
+        ]
+      }
+    },
+    "network_interface": {
+      "name": "smppgw",
+      "address": [
+        "127.0.0.1:5088",
+        "127.0.0.1:5089"
+      ],
+      "timeout": 10,
+      "router": {
+        "reverse": false,
+        "routing_list": [
+          {
+            "msg_type": "submit",
+            "method": "prefix",
+            "routes": [
+              {
+                "id": "1",
+                "prefix": [
+                  "98912",
+                  "98910"
+                ],
+                "target": "test_server_1"
+              },
+              {
+                "id": "2",
+                "prefix": [
+                  "98935",
+                  "98905"
+                ],
+                "target": "test_server_2"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

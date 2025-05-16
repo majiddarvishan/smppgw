@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package SMSC.Protobuf.GSM;
+
+import "Definition.proto";
+
+message ati_req {
+  string unique_id = 1;
+  /*
+   *
+   * Bits7-4  Bit3  Bit2  Bit1  Bit0
+   *  0000     LI    SS   IMEI   CL
+   *
+   * LI: Location Information, SS: Subscriber State, CL: Current Location
+   */
+  uint32 requested_info = 2;
+  Address gsm_scf_address = 3;
+  Address msisdn = 4;
+  string imsi = 5;
+  int32 map_service = 6;
+}
+
+message ati_resp {
+  enum subscriber_state
+  {
+    assumed_idle                          = 0;
+    camel_busy                            = 1;
+    net_det_not_reachable_ms_purged       = 2;
+    net_det_not_reachable_imsi_detached   = 3;
+    net_det_not_reachable_restricted_area = 4;
+    net_det_not_reachable_not_registered  = 5;
+    not_provided_from_vlr                 = 6;
+  }
+  
+  string unique_id = 1;
+
+  int32 map_service = 2;
+  int32 location_info_age = 3;
+  bool current_location_retrieved = 4;
+  bytes cell_id = 5;
+  Address vlr = 6;
+  Address msc = 7;
+  string imei = 8;
+  int32 user_error = 9;
+  int32 provider_error = 10;
+  subscriber_state state = 11;
+}

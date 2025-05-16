@@ -1,0 +1,146 @@
+#!/bin/sh
+
+MODULE_NAME=SMPPGateway
+
+INSTALLATION_DIR=/usr/local/PeykAsa
+VERSION=`cat $INSTALLATION_DIR/SMPPGateway/LastVersion`
+MODULE_HOME=/usr/local/PeykAsa/SMPPGateway/Release-$VERSION
+MODULE_BIN=$MODULE_HOME/bin
+MODULE_LOG=$MODULE_HOME/log
+LOCK=/var/lock/sgw-$VERSION
+PID=/var/run/sgw-$VERSION.pid
+ARCH_TAG=`date +%F-%H-%M-%S`
+
+cd $MODULE_BIN
+ulimit -c unlimited
+
+Shared_memory=`grep '<SharedMemoryKey>' $MODULE_HOME/bin/config.xml | cut -f 2 -d '>' | cut -f 1 -d '<' | head -n1`
+
+case "$1" in
+	'start')
+        pid=`pidof $MODULE_NAME`
+        if [ "$pid" != "" ];then
+            echo -e "$MODULE_NAME is already up!!\n"
+            exit 0 #OK
+        else
+            echo -n "Starting $MODULE_NAME ..."
+
+            ln -sf $MODULE_LOG/$MODULE_NAME-$ARCH_TAG.log $MODULE_LOG/$MODULE_NAME.log -f
+
+            $MODULE_BIN/$MODULE_NAME >> $MODULE_LOG/$MODULE_NAME-$ARCH_TAG.log &
+
+            #check if started successfully or not
+            sleep 1
+            if [ `pidof $MODULE_NAME` ]; then
+                touch $LOCK
+                touch $PID
+                echo `pidof $MODULE_NAME` > $PID
+
+                echo "(DONE) Successfully. "
+                exit 0 #OK
+            else
+                echo "Can not be started. "
+                exit 3 #Down
+            fi
+        fi
+
+		;;
+
+	'stop')
+        if [ `pidof $MODULE_NAME` ]; then
+            echo -n "Stopping $MODULE_NAME ..."
+
+            #Dumpung a monitoring snapshot
+            $MODULE_HOME/bin/Monitoring $Shared_memory > $MODULE_HOME/log/sgw-$VERSION-MON-$ARCH_TAG.snapshot
+
+            #Shutting Down
+            kill -USR2 `pidof $MODULE_NAME`
+
+            #check if stoped successfully or not
+            sleep 2
+            if [ `pidof $MODULE_NAME` ]; then
+                echo "(ERROR) Can not be stoped. "
+                exit 0
+            else
+                echo "(DONE) Successfully. "
+                rm -f $LOCK
+                rm -f $PID
+                exit 3
+            fi
+
+        else
+            echo "SMPPGateway has been already stoped."
+            exit 0 #OK
+        fi
+
+		;;
+
+	'restart')
+		echo "Restarting SMPPGateway: "
+		$0 stop
+		$0 start
+		echo
+		;;
+
+	'forcestop')
+		if [ `pidof $DAEMON` ]; then
+			echo "Force Shutting down SMPPGateway ... "
+			$MODULE_HOME/bin/Monitoring $Shared_memory > $MODULE_HOME/log/sgw-$VERSION-mon-$ARCH_TAG.log
+			killall -9 $DAEMON
+
+			#check if stoped successfully or not
+			if [ `pidof $DAEMON` ]; then
+				echo "SMPPGateway can not be stoped. "
+				exit 0 #OK
+			else
+				echo "SMPPGateway is stoped successfully. "
+				exit 3 #Down
+			fi
+
+		else
+			echo "SMPPGateway has been already stoped."
+			exit 0 #OK
+		fi
+
+		echo
+		;;
+
+	'monitor')
+		if [ $# -eq 1 ]; then
+			watch -n 1 -d $MODULE_HOME/bin/Monitoring $Shared_memory
+		else
+			set $@
+			shift
+			watch -n 1 -d $MODULE_HOME/bin/Monitoring $Shared_memory $@
+		fi
+		;;
+
+	'status')
+		if [ `pidof $MODULE_NAME` ]; then
+            echo "No problem. Service is OK" &&
+			exit 0 #OK
+		elif [ ! `pidof $MODULE_NAME` ] && [ -f $PID ]; then
+			echo "1 (Not runnig but PID file EXISTS)"
+			exit 1
+		elif [ ! `pidof $MODULE_NAME` ] && [ -f $LOCK ]; then
+			echo "1 (Not runnig but LOCK file EXISTS)"
+			exit 2
+		fi
+
+		echo "3 (Not running!)"
+		exit 3
+		;;
+
+	'logtail')
+        tail -f $MODULE_LOG/$MODULE_NAME.log
+		;;
+
+	'version')
+		echo $VERSION
+		;;
+	*)
+		echo "Usage: sgwd { start | stop | restart | forcestop | status | logtail | monitor | version}"
+		exit 1
+esac
+exit 0
+

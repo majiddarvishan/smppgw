@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package SMSC.Protobuf.GSM;
+
+import "Definition.proto";
+
+message Sms_Submit_Req {
+  string smsc_unique_id = 1;
+
+  // RL_originatingAddress,
+  Address source_addr = 2;
+  Address destination_addr = 3;
+  Address msc_addr = 4;
+  string imsi = 5;
+  bool reject_duplicates = 6;
+  bool reply_path_flag = 7;
+  bool user_data_header_indicator = 8;
+  StatusReportRequest status_rep_req = 9;
+  int32 message_reference = 10;
+  protocol_id_type protocol_id = 11;
+
+  validity_period_format vpf = 12;
+  int32 validity_period = 13;
+
+  bool ignore_user_validity_period = 14;
+  int32 max_submit_validity_period = 15;
+  int32 max_delivery_report_validity_period = 16;
+
+  Message_Body body = 17;
+
+  float source_charging_rate = 18;
+  float dest_charging_rate = 19;
+}
+
+message Sms_Submit_Resp {
+  string smsc_unique_id = 1;
+  int32 protocol_id = 2;
+  int32 service_centre_time_stamp = 3;
+  int32 user_error = 4;
+  int32 provider_error = 5;
+}

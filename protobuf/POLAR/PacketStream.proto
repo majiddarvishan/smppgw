@@ -1,0 +1,194 @@
+syntax = "proto3";
+
+package pa.polar.proto;
+
+enum MessageEvent
+{
+    Input           = 0;
+    SRI             = 1;
+    Deliver         = 2;
+    WaitForEvent    = 3;
+    Immediate       = 4;
+    Short           = 5;
+    Long            = 6;
+    LastChance      = 7;
+    DontSchedule    = 8;
+    AlertSc         = 9;
+    RSDS            = 10;
+    CreditControl   = 11;
+    Refund          = 12;
+    Recover         = 13;
+    Final           = 20;
+}
+
+enum ErrorType
+{
+    NO_ERROR               = 0;
+    DONT_RETRY             = 1;
+    NOT_DEFINED            = 2;
+    NOT_DEFINED2           = 3;
+    RETRY_IMMEDIATELY      = 4;
+    RETRY_AFTER_SHORT_TIME = 5;
+    RETRY_AFTER_LONG_TIME  = 6;
+    RETRY_AFTER_AN_EVENT   = 7;
+    TIMED_OUT              = 8;
+};
+
+enum NotifyMode
+{
+    NONE                  = 0;
+    ALWAYS_NOTIFIED       = 1;
+    ONLY_NOTIFIED_FAILED  = 2;
+    ONLY_NOTIFIED_SUCCESS = 3;
+    NEVER_NOTIFIED        = 4;
+}
+
+enum TryStatus
+{
+    TS_UNKNOWN  = 0;
+    TS_TIMEOUT  = 1;
+    TS_FAILED   = 2;
+    TS_REJECTED = 3;
+    TS_SUCCESS  = 4;
+}
+
+enum DCT
+{
+    DCT_UNKNOWN          = 0x00;
+    DCT_DEFAULT_ALPHABET = 0x01;
+    DCT_8_BIT_DATA       = 0x02;
+    DCT_8_BIT_ASCII      = 0x03;
+    DCT_16_BIT_DATA      = 0x04;
+}
+
+message Address
+{
+    uint32 ton    = 1;
+    uint32 npi    = 2;
+    string value  = 3;
+}
+
+enum PolicyAffectedPlugin
+{
+    PAP_NONE         = 0;
+    PAP_SYSTEM_FAIL  = 1;
+    PAP_CRA          = 2;
+    PAP_CBS          = 3;
+    PAP_FW           = 4;
+    PAP_BW_LIST      = 5;
+    PAP_SPOOF        = 6;
+    PAP_CP_CHECK     = 7;
+    PAP_LIF          = 8;
+};
+
+message packet
+{
+    string smsc_unique_id = 1                               [json_name = "SMSCUniqueId"];
+
+    uint32 message_type = 2                                 [json_name = "MessageType"];
+
+    uint32 src_interface = 3                                [json_name = "SourceInterface"];
+    uint32 dst_interface = 4                                [json_name = "DestinationInterface"];
+
+    string src_interface_id = 5                             [json_name = "source_interface_id"];
+    string dst_interface_id = 6                             [json_name = "destination_interface_id"];
+
+    string source_client_system_id = 7                      [json_name = "source_client_system_id"];
+    string destination_client_system_id = 8                 [json_name = "destination_client_system_id"];
+
+    uint32 deliveryRequestType = 9                          [json_name = "delivery_request_type"];
+
+    uint32 replyPathFlag = 10                               [json_name = "ReplyPathFlag"];
+    uint32 smDefaultMsgId = 11                              [json_name = "smDefaultMsgId"];
+    string serviceType = 12                                 [json_name = "ServiceType"];
+    bool replaceIfPresentFlag = 13                          [json_name = "ReplaceIfPresentFlag"];
+    bool moreMessageToSend = 14                             [json_name = "MoreMessageToSend"];
+    int32 messageReference = 15                             [json_name = "MessageReference"];
+    bool statusReportQualifier = 16                         [json_name = "StatusReportQualifier"];
+    uint32 parameterIndicator = 17                          [json_name = "ParameterIndicator"];
+    int32 StatusType = 18                                   [json_name = "StatusType"];
+
+    int32 latestState = 19                                  [json_name = "LatestState"];
+
+    NotifyMode sourceNotifyMode = 20                        [json_name = "SourceNotifyMode"];
+
+    int32 respSequenceNumber = 21                           [json_name = "RespSequenceNumber"];
+    uint32 originalSmsSubmitReferenceNo = 22                [json_name = "OriginalSmsSubmitReferenceNo"];
+
+    int32 protocolIdentifier = 23                           [json_name = "ProtocolIdentifier"];
+    uint32 priority = 24                                    [json_name = "Priority"];
+    int32 messageMode = 25                                  [json_name = "MessageMode"];
+
+    bool isSourceCharged = 26                               [json_name = "IsSourceCharged"];
+
+    bool moNotifySuccessfullySend = 27                      [json_name = "moNotifySuccessfullySend"];
+
+    Address smsc_address = 28                               [json_name = "smscaddress"];
+
+    string source_imsi = 29                                 [json_name = "SourceIMSI"];
+    Address source_msc_address = 30                         [json_name = "SourceMSC"];
+    Address source_address = 31                             [json_name = "Sourceaddress"];
+    Address source_mnp_address = 32                         [json_name = "SourceMNPaddress"];
+
+    Address destination_msc_address = 33                    [json_name = "DestinationMSC"];
+    string destination_imsi = 34                            [json_name = "DestinationIMSI"];
+    Address destination_address = 35                        [json_name = "Destinationaddress"];
+    Address destination_mnp_address = 36                    [json_name = "DestinationMNPaddress"];
+
+    bool is_fake_source_address = 37                        [json_name = "HasFakeSourceaddress"];
+    Address fake_source_address = 38                        [json_name = "FakeSourceaddress"];
+
+    bool is_fake_destination_address = 39                   [json_name = "HasFakeDestinationaddress"];
+    Address fake_destination_address = 40                   [json_name = "FakeDestinationaddress"];
+
+    string message_id_string = 41                           [json_name = "MessageId"];
+
+    int64 logging_time = 42                                 [json_name = "LoggingTime"];
+    int32 creationTime = 43                                 [json_name = "ReceivedTime"];
+    int32 sentTime = 44                                     [json_name = "SentTime"];
+    int32 respTime = 45                                     [json_name = "ResponseSentTime"];
+    int32 nextDeliveryTime = 46                             [json_name = "NextDeliveryTime"];
+    int32 latestValidityTime = 47                           [json_name = "ValidityTime"];
+    int32 lastDeliverTime = 48                              [json_name = "LastDeliverTime"];
+
+    uint32 dataCoding = 49                                  [json_name = "DataCoding"];
+    bytes  bodyText = 50                                    [json_name = "Body"];
+    bytes  udh = 51                                         [json_name = "UDH"];
+    uint32 numberOfParts = 52                               [json_name = "NumberOfParts"];
+    uint32 partSequenceNumber = 53                          [json_name = "PartNumber"];
+    uint32 concatSMRefNum = 54                              [json_name = "PartRefNumber"];
+
+    MessageEvent messageEvent = 55                          [json_name = "MessageEvent"];
+
+    int32 totalTriesCount = 56                              [json_name = "TotalTriesCount"];
+    int32 countOfTriesSuccess = 57                          [json_name = "CountOfTriesSuccess"];
+    int32 countOfTriesLeadingToImmediateError = 58          [json_name = "CountOfTriesLeadingToImmediateError"];
+    int32 countOfTriesLeadingToShortTimeError = 59          [json_name = "CountOfTriesLeadingToShortTimeError"];
+    int32 countOfTriesLeadingToLongTimeError = 60           [json_name = "CountOfTriesLeadingToLongTimeError"];
+    int32 countOfTriesLeadingToSuspendForEventError = 61    [json_name = "CountOfTriesLeadingToSuspendForEventError"];
+    int32 countOfTriesLeadingToPermanentError = 62          [json_name = "CountOfTriesLeadingToPermanentError"];
+    int32 countOfTriesLeadingToWaitForResp = 63             [json_name = "CountOfTriesLeadingToWaitForResp"];
+    int32 countOfTriesLeadingToLastChance = 64              [json_name = "CountOfTriesLeadingToLastChance"];
+
+    int32 lastDeliverErrorNo = 65                           [json_name = "LastDeliverErrorNo"];
+    ErrorType lastDeliverErrorType = 66                     [json_name = "LastDeliverErrorType"];
+
+    TryStatus tryStatus = 67                                [json_name = "TryStatus"];
+
+    uint64 statesOfShortMessage = 68                        [json_name = "StatesOfShortMessage"];
+
+    uint64 latestStatus = 69                                [json_name = "LatestStatus"];
+
+    uint32 originating_subscriber_type = 70                 [json_name = "OriginatingSubscriberType"];
+    uint32 destination_subscriber_type = 71                 [json_name = "DestinationSubscriberType"];
+
+    DCT data_coding_type = 72                               [json_name = "data_coding_type"];
+
+    uint32 hlr_mt_flag = 73                                 [json_name = "hlr_mt_flag"];
+
+    uint64 origin_submit_id = 74                            [json_name = "origin_submit_id"];
+    uint32 cbs_error = 75                                   [json_name = "cbs_error"];
+    string firewall_rules = 76                              [json_name = "firewall_rules"];
+    uint32 firewall_action = 77                             [json_name = "firewall_action"];
+    PolicyAffectedPlugin policy_affected_plugin = 78        [json_name = "policy_affected_plugin"];
+}

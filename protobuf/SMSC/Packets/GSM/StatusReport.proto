@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package SMSC.Protobuf.GSM;
+
+import "Definition.proto";
+
+enum status_type {
+  short_message_received                     = 0x00;
+  short_message_forwarded                    = 0x01;
+  short_message_replaced                     = 0x02;
+  temporary_transfer_congestion              = 0x20;
+  temporary_transfer_sme_busy                = 0x21;
+  temporary_transfer_no_response_from_sme    = 0x22;
+  temporary_transfer_service_rejected        = 0x23;
+  temporary_transfer_quality_of_service_not_available = 0x24;
+  temporary_transfer_error_in_sme            = 0x25;
+  permanent_remote_procedure_error           = 0x40;
+  permanent_incompatible_destination         = 0x41;
+  permanent_connection_rejected_by_sme       = 0x42;
+  permanent_not_obtainable                   = 0x43;
+  permanent_quality_of_service_not_available = 0x44;
+  permanent_no_interworking_available        = 0x45;
+  permanent_sm_validity_period_expired       = 0x46;
+  permanent_sm_deleted_by_originating_sme    = 0x47;
+  permanent_sm_deleted_by_sc_administration  = 0x48;
+  permanent_sm_does_not_exist                = 0x49;
+  temporary_congestion                       = 0x60;
+  temporary_sme_busy                         = 0x61;
+  temporary_no_response_from_sme             = 0x62;
+  temporary_service_rejected                 = 0x63;
+  temporary_quality_of_service_not_available = 0x64;
+  temporary_error_in_sme                     = 0x65;
+};
+
+message Status_Report_Req {
+  string smsc_unique_id = 1;
+
+  Address smrp_originating_addr = 2;
+  Address smrp_destination_addr = 3;
+  Address originating_sccp_addr = 4;
+  Address destination_sccp_addr = 5;
+
+  bool user_data_header_indicator = 6;
+
+  int32 more_message_to_send = 7;
+  int32 status_report_qualifier = 8;
+  int32 message_reference = 9;
+
+  Address recipient_address = 10;
+  int32 service_centre_time_stamp = 11;
+  int32 discharge_time = 12;
+  status_type status_type = 13;
+  int32 parameter_indicator = 14;
+  int32 protocol_id = 15;
+
+  Message_Body body = 16;
+
+  int32 original_tcap_dialog_id = 17; // for using in MD
+}
+
+message Status_Report_Resp {
+  string smsc_unique_id = 1;
+
+  int32 user_error = 2;
+  int32 provider_error = 3;
+
+  int32 mw_set_indication = 4;
+
+  int32 original_tcap_dialog_id = 5;
+}

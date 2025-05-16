@@ -1,0 +1,162 @@
+syntax = "proto3";
+
+package pa.paper.proto;
+
+enum FilteringAction {
+    INVALID_FILTERING_ACTION = 0;
+    BLOCK = 1;
+    REPLACE = 2;
+    MASK = 3;
+    DELAY = 4;
+    MASKDELAY = 5;
+    NOACTION = 6;
+}
+
+enum BlockAction {
+    INVALID_BLOCK_ACTION = 0;
+    SEND_ACK = 1;
+    SEND_NACK = 2;
+    DONT_SEND_ACK = 3;
+    DONT_BLOCK = 4;
+}
+
+enum RefundAction {
+    INVALID_REFUND_ACTION = 0;
+    REFUND = 1;
+    DONT_REFUND = 2;
+}
+
+enum DeliveryReport {
+    INVALID_DELIVERY_REPORT = 0;
+    SEND_FDR = 1;
+    SEND_SDR = 2;
+    DONT_SEND_DR = 3;
+}
+
+enum FilterLikeType {
+    EXACT = 0;
+    CONTAINS = 1;
+    PREFIX = 2;
+    POSTFIX = 3;
+}
+
+enum ContentType {
+    TEXT_TYPE = 0;
+    BINARY_TYPE = 1;
+    BOTH_TYPE = 2;
+}
+
+enum Language {
+    ENGLISH = 0;
+    FARSI = 1;
+}
+
+enum FilteringMethod {
+    INSERT = 0;
+    GET = 1;
+    UPDATE = 2;
+    DELETE = 3;
+}
+
+message Filter_Rule {
+    string filtering_rule_set = 1 [ json_name = "filtering_rule_set" ];
+    string sender = 2 [ json_name = "sender" ];
+    string receiver = 3 [ json_name = "receiver" ];
+    string body = 4 [ json_name = "body" ];
+    string network_src_addr = 5 [ json_name = "network_src_addr" ];
+    string network_dst_addr = 6 [ json_name = "network_dst_addr" ];
+    FilterLikeType filter_like_sender = 7 [ json_name = "filter_like_sender" ];
+    FilterLikeType filter_like_receiver = 8 [ json_name = "filter_like_receiver" ];
+    FilterLikeType filter_like_netsrc = 9 [ json_name = "filter_like_netsrc" ];
+    FilterLikeType filter_like_netdst = 10 [ json_name = "filter_like_netdst" ];
+    FilteringAction filtering_action = 11 [ json_name = "filtering_action" ];
+    BlockAction block_action = 12 [ json_name = "block_action" ];
+    RefundAction refund_action = 13 [ json_name = "refund_action" ];
+    DeliveryReport delivery_report = 14 [ json_name = "delivery_report" ];
+    string replacement_text = 15 [ json_name = "replacement_text" ];
+    int32 delay = 16 [ json_name = "delay" ];
+    Language replacement_text_lang = 17 [ json_name = "replacement_text_lang" ];
+    int32 priority = 18 [ json_name = "priority" ];
+    int32 src_lac = 19 [ json_name = "src_lac" ];
+    int32 src_cell_id = 20 [ json_name = "src_cell_id" ];
+    int32 dst_lac = 21 [ json_name = "dst_lac" ];
+    int32 dst_cell_id = 22 [ json_name = "dst_cell_id" ];
+    ContentType content_type = 23 [ json_name = "content_type" ];
+}
+
+message Filtering_Whitelist {
+    string mobile_no = 1 [ json_name = "mobile_no" ];
+}
+
+message Online_Monitoring { string mobile_no = 1 [ json_name = "mobile_no" ]; }
+
+message Filtering_Rules {
+    FilteringMethod method = 1 [ json_name = "method" ];
+    string rule_id = 2 [ json_name = "rule_id" ];
+    int32 limit = 3 [ json_name = "limit" ];
+    int32 offset = 4 [ json_name = "offset" ];
+    Filter_Rule filter_rule = 5 [ json_name = "filter_rule" ];
+    Filtering_Whitelist filtering_whitelist = 6 [ json_name = "filtering_whitelist" ];
+    Online_Monitoring online_monitoring = 7 [ json_name = "online_monitoring" ];
+}
+
+message Filtering_Rules_Resp {
+    repeated Filter_Rule filter_rules = 1 [ json_name = "filter_rules" ];
+    repeated Filtering_Whitelist filtering_whitelists = 2 [ json_name = "filtering_whitelists" ];
+    repeated Online_Monitoring online_monitorings = 3 [ json_name = "online_monitorings" ];
+}
+
+message LIFReq {
+    enum PacketType {
+      UNKNOWN = 0;
+      SMPP_MULTISM = 1;
+      SMPP_SUBMIT_MESSAGE = 2;
+      GSM_SUBMIT_MESSAGE = 3;
+      SMPP_REPORT = 4;
+      GSM_REPORT = 5;
+      SUBMIT = 100;
+      DELIVER = 101;
+    }
+
+    enum MsuDirection {
+      INBOUND = 0;
+      OUTBOUND = 1;
+    }
+
+    enum LocationStatus {
+      NOT_PROVIDED = 0;
+      OUT_DATED = 1;
+      ERROR = 2;
+      VALID = 3;
+      FOREIGN = 4;
+    }
+
+    PacketType packet_type = 1;
+    MsuDirection direction = 2;
+    bool is_binary = 3;
+
+    LocationStatus src_state = 4;
+    int32 src_lac = 5;
+    int32 src_cell_id = 6;
+
+    LocationStatus dst_state = 7;
+    int32 dst_lac = 8;
+    int32 dst_cell_id = 9;
+}
+
+message LIFResp {
+    message LocationRequest {
+      bool src_location = 1;
+      bool dst_location = 2;
+      bool fetch_foreign_location = 3;
+    }
+
+    FilteringAction filtering_action = 1;
+    BlockAction block_action = 2;
+    RefundAction refund_action = 3;
+    DeliveryReport delivery_report = 4;
+    int32 delay = 5;
+    string body = 6;
+    string filter_rule_Set = 7;
+    LocationRequest location_request = 8;
+}

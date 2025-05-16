@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package SMSC.Trace.Protobuf;
+option go_package = "peykasa.ir/smsc/trace/proto";
+
+enum Event
+{
+    ReceiveSubmit              = 0;
+    SendSubmit                 = 1;
+    SendSubmitResp             = 2;
+    ReceiveSubmitResp          = 3;
+    Sending                    = 4;
+    Sent                       = 5;
+    SendFailed                 = 6;
+    Processing                 = 7;
+    PolicyRequest              = 8;
+    PolicyResponse             = 9;
+    GenerateDR                 = 10;
+    SendRSDS                   = 11;
+    ReceiveRSDS                = 12;
+    ReceiveRSDSResp            = 13;
+    SendRSDSResp               = 14;
+    SendSRI                    = 15;
+    ReceiveSRI                 = 16;
+    ReceiveSRIResp             = 17;
+    SendSRIResp                = 18;
+    SendDeliver                = 19;
+    ReceiveDeliver             = 20;
+    ReceiveDeliverResp         = 21;
+    SendDeliverResp            = 22;
+    SendDeliveryReport         = 23;
+    ReceiveDeliveryReport      = 24;
+    ReceiveDeliveryReportResp  = 25;
+    SendDeliveryReportResp     = 26;
+    ReceiveAlertSc             = 27;
+    SendAlertSc                = 28;
+    ReceiveAlertScResp         = 29;
+    SendAlertScResp            = 30;
+    Recovered                  = 31;
+    Timeout                    = 32;
+    Rejected                   = 33;
+    Finalize                   = 34;
+}
+
+message Packet {
+    uint64 current_time = 1         [json_name = "CurrentTime"];
+    uint32 msg_type = 2             [json_name = "MessageType"];
+    string component_name = 3       [json_name = "ComponentName"];
+    string smsc_unique_id = 4       [json_name = "SMSCUniqueID"];
+    string msg_id = 5               [json_name = "MessageId"];
+    Event event = 6                 [json_name = "Event"];
+    string origin_client_id = 7     [json_name = "OriginClientId"];
+    string dest_client_id = 8       [json_name = "DestinationClientId"];
+    string src_addr = 9             [json_name = "SourceAddress"];
+    string dest_addr = 10           [json_name = "DestinationAddress"];
+    string src_msc_addr = 11        [json_name = "SourceMSCAddress"];
+    string fake_src_addr = 12       [json_name = "SourceMaskAddress"];
+    string fake_dest_addr = 13      [json_name = "DestinationMaskAddress"];
+    int32 error_no = 14             [json_name = "ErrorNumber"];
+    string error_str = 15           [json_name = "ErrorDescription"];
+    uint32 try_count = 16           [json_name = "TryCount"];
+    uint32 next_delivery_time = 17  [json_name = "NextDeliveryTime"];
+}

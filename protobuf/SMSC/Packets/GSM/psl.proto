@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package SMSC.Protobuf.GSM;
+
+import "Definition.proto";
+
+message psl_req {
+  enum location_tpe
+  {
+    current_location = 0;
+    current_or_last_known_location = 1;
+    initial_ocation = 2;
+    activate_deferred_location = 3;
+    cancel_deferred_location = 4;
+    notification_verification_only = 5;
+  }
+
+  enum client_type
+  {
+    emergency_services = 0;
+    value_added_services = 1;
+    plmn_operator_services = 2;
+    lawful_intercept_services = 3;
+  }
+
+  string unique_id = 1;
+  Address msc_address = 2;
+  location_tpe location_type = 3;
+  Address mlc_number = 4;
+  client_type lcs_client_type = 5;
+  Address msisdn = 6;
+  string imsi = 7;
+}
+
+message psl_resp {
+  enum subscriber_state
+  {
+      assumed_idle                          = 0;
+      camel_busy                            = 1;
+      net_det_not_reachable_ms_purged       = 2;
+      net_det_not_reachable_imsi_detached   = 3;
+      net_det_not_reachable_restricted_area = 4;
+      net_det_not_reachable_not_registered  = 5;
+      not_provided_from_vlr                 = 6;
+  }
+
+  string unique_id = 1;
+
+  int32 map_service = 2;
+  int32 location_info_age = 3;
+  bool current_location_retrieved = 4;
+  string cell_id = 5;
+  Address vlr = 6;
+  Address msc = 7;
+  string imei = 8;
+  int32 user_error = 9;
+  int32 provider_error = 10;
+  subscriber_state state = 11;
+}

@@ -1,0 +1,161 @@
+syntax = "proto3";
+
+package pa.paper.proto;
+import "firewall.proto";
+import "lif_engine.proto";
+
+enum Status {
+  OK = 0;
+  TIMEOUT = 1;
+  FORMAT_ERROR = 2;
+  NO_CREDIT = 3;
+
+  INVALID_DATA_CODING = 4;
+
+  SOURCE_NUMBER_IN_BLACK_LIST = 5;
+  SOURCE_NUMBER_NOT_IN_WHITE_LIST = 6;
+  SOURCE_NUMBER_NOT_VALID = 7;
+  SOURCE_NUMBER_INVALID_TON = 8;
+  SOURCE_NUMBER_INVALID_NPI = 9;
+
+  DESTINATION_NUMBER_NOT_VALID = 10;
+  DESTINATION_NUMBER_INVALID_TON = 11;
+  DESTINATION_NUMBER_INVALID_NPI = 12;
+  DESTINATION_NUMBER_IN_BLACK_LIST = 13;
+
+  LIF_NO_FILTER = 14;
+  LIF_SUBSCRIBER_WHITELIST = 15;
+  LIF_OPERATOR_WHITELIST = 16;
+  LIF_RESTRICTED_LIST = 17;
+  LIF_BINARY = 18;
+  LIF_RULE = 19;
+  LIF_LOCATION_MISSING = 20;
+
+  FILTERING_RULES_SUCCESS = 21;
+  FILTERING_RULES_INTERNAL_ERROR = 22;
+  FILTERING_RULES_BAD_PACKET = 23;
+  FILTERING_RULES_ROW_NOT_EXIST = 24;
+
+  CREDIT_CONTROL_FAILED  = 25;
+  REFUND_FAILED = 26;
+
+  SPOOFED_NUMBER = 27;
+
+  FIREWALL_BLOCK = 28;
+
+  CRA_BLOCK = 29;
+
+  UNSUPPORTED_COMMAND = 100;
+}
+
+message Request {
+  enum Type {
+    CREDIT_CONTROL = 0;
+    REFUND = 1;
+    ANTI_SPOOFING = 2;
+    SOURCE_ADDRESS_CHECK = 3;
+    DESTINATION_ADDRESS_CHECK = 4;
+    SOURCE_TON_NPI_CHECK = 5;
+    DESTINATION_TON_NPI_CHECK = 6;
+    DCS_CHECK = 7;
+    BLACK_WHITE_CHECK = 8;
+    FIREWALL_CHECK = 9;
+    CRA_CHECK = 10;
+
+    LIF = 11;
+    FILTER_RULE = 12;
+    FILTERING_WHITE_LIST = 13;
+    OPERATOR_WHITE_LIST = 14;
+    RESTRICTED_LIST = 15;
+    ONLINE_MONITORING_LIST = 16;
+  }
+
+  string client_id = 1;
+  uint32 seq_number = 2;
+
+  repeated Type cmd_type = 3;
+  string token = 4;
+  string user_data = 5;
+  uint32 command_log = 6;
+
+  LIFReq cmd_lif = 7;
+  Filtering_Rules cmd_filtering_rules = 8;
+
+  RefundReq cmd_refund = 9;
+
+  uint32 submit_time = 10;
+
+  uint32 src_ton = 11;
+  uint32 src_npi= 12;
+  string src_address = 13;
+  uint32 dst_ton = 14;
+  uint32 dst_npi= 15;
+  string dst_address = 16;
+
+  string src_msc = 17;
+  string src_imsi = 18;
+  string dst_msc = 19;
+  string dst_imsi = 20;
+
+  string msg_id = 21;
+  uint32 msg_type = 22; // require for firewall msg_type
+
+  uint32 delivery_request_type = 23;
+
+  uint32 total_parts = 24;
+  uint32 part_number = 25;
+  uint32 part_id = 26;
+
+  int32 dcs = 27;
+  int32 body_len = 28;
+  bytes body = 29;
+
+  string cp_system_id = 30;
+}
+
+message Response {
+  enum Type {
+    CREDIT_CONTROL_RESP = 0;
+    REFUND_RESP = 1;
+    ANTI_SPOOFING_RESP = 2;
+    SOURCE_ADDRESS_CHECK_RESP = 3;
+    DESTINATION_ADDRESS_CHECK_RESP = 4;
+    SOURCE_TON_NPI_CHECK_RESP = 5;
+    DESTINATION_TON_NPI_CHECK_RESP = 6;
+    DCS_CHECK_RESP = 7;
+    BLACK_WHITE_CHECK_RESP = 8;
+    FIREWALL_CHECK_RESP = 9;
+    CRA_CHECK_RESP = 10;
+
+    LIF_RESP = 11;
+    FILTER_RULE_RESP = 12;
+    FILTERING_WHITE_LIST_RESP = 13;
+    OPERATOR_WHITE_LIST_RESP = 14;
+    RESTRICTED_LIST_RESP = 15;
+    ONLINE_MONITORING_LIST_RESP = 16;
+  }
+
+  repeated Type cmd_type = 1;
+  Status status = 2;
+
+  LIFResp cmd_lif_resp = 3;
+  Filtering_Rules_Resp cmd_filtering_rules_resp = 4;
+
+  CreditControlResp cmd_credit_control_resp = 5;
+  RefundResp cmd_refund_resp = 6;
+
+  FirewallResponse cmd_firewall_check_resp = 7;
+}
+
+message CreditControlResp {
+  uint32 result_code = 1;
+  uint32 refund_mode = 2;
+}
+
+message RefundReq {
+  bool send_result = 1;
+}
+
+message RefundResp {
+  uint32 result_code = 1;
+}
