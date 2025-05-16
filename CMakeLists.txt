@@ -55,29 +55,6 @@ CPMAddPackage(
           "GENERATE_PKGCONFIG OFF"
 )
 
-CPMAddPackage(NAME pa-smpp
-              VERSION 1.0.3
-              GIT_REPOSITORY "git@gitlab.peykasa.ir:CLibraries/pa/smpp.git"
-              GIT_TAG 1.0.3
-              OPTIONS "BUILD_TESTS OFF"
-                      "BUILD_EXAMPLES OFF")
-
-CPMAddPackage(NAME pinex
-              VERSION 1.2.2
-              GIT_REPOSITORY "git@gitlab.peykasa.ir:CLibraries/pa/pinex.git"
-              GIT_TAG 1.2.2
-              OPTIONS "BUILD_TESTS OFF"
-                      "BUILD_EXAMPLES OFF")
-
-# CPMAddPackage(
-#   NAME cppkafka
-#   VERSION 0.4.1
-#   GIT_REPOSITORY "https://github.com/mfontanini/cppkafka.git"
-#   GIT_TAG v0.4.1
-#   OPTIONS "CPPKAFKA_DISABLE_TESTS ON"
-#           "CPPKAFKA_DISABLE_EXAMPLES ON"
-# )
-
 CPMAddPackage(
   NAME pa-config
   VERSION 1.0.1
@@ -198,7 +175,7 @@ add_compile_definitions(SERVER_TIME="${SERVER_TIME}")
 # ##################################################################################################
 
 add_subdirectory(src)
-#add_subdirectory(test)
+add_subdirectory(libs)
 
 # set(COVERAGE_EXCLUDE_FOLDERS test/gtest test/unittest src/Protobuf)
 # set(COVERAGE_EXCLUDE_FILES Main/Charging/Command.pb.cc Main/Charging/Command.pb.h)
