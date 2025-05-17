@@ -174,8 +174,8 @@ execute_process(
 add_compile_definitions(SERVER_TIME="${SERVER_TIME}")
 # ##################################################################################################
 
-add_subdirectory(src)
 add_subdirectory(libs)
+add_subdirectory(src)
 
 # set(COVERAGE_EXCLUDE_FOLDERS test/gtest test/unittest src/Protobuf)
 # set(COVERAGE_EXCLUDE_FILES Main/Charging/Command.pb.cc Main/Charging/Command.pb.h)
