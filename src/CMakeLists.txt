@@ -95,6 +95,7 @@ target_include_directories(lib-${PRODUCT}
   PUBLIC
     # mshadow: todo: after fix SMPP protobuf generating bug. first line should be delete.
     "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}>"
+    "$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/libs>"
     "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/protobuf>"
     "$<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/protobuf/packets>"
 )

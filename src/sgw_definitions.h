@@ -5,7 +5,7 @@
 #include "packets/SMPP/DeliverSm.pb.h"
 #include "packets/SMPP/DeliveryReport.pb.h"
 
-#include <pa/smpp.hpp>
+#include <smpp/smpp.hpp>
 
 #include <google/protobuf/message.h>
 #include <google/protobuf/util/json_util.h>

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <pa/smpp/param/oparam_tag.hpp>
+#include <smpp/param/oparam_tag.hpp>
 
 #include <map>
 #include <memory>

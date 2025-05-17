@@ -1,6 +1,6 @@
 #pragma once
 
-#include <pa/smpp/param/ton.hpp>
+#include <smpp/param/ton.hpp>
 
 #include <string>
 #include <string_view>

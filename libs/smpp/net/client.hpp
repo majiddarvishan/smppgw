@@ -1,6 +1,6 @@
 #pragma once
 
-#include <pa/smpp/net/session.hpp>
+#include <smpp/net/session.hpp>
 
 namespace pa::smpp
 {

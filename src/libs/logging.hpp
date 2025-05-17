@@ -70,4 +70,3 @@ public:
 
 #define LOG_HEX(level, message)\
     LOG(level, "{}", spdlog::to_hex(message.begin(), message.end()));
-              

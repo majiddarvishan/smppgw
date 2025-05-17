@@ -1,6 +1,6 @@
 #pragma once
 
-#include <pa/smpp/param/data_coding.hpp>
+#include <smpp/param/data_coding.hpp>
 
 #include <cinttypes>
 

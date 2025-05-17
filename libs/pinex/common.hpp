@@ -1,7 +1,7 @@
 #pragma once
 
-#include <pa/pinex/common/bind_type.hpp>
-#include <pa/pinex/common/command_id.hpp>
-#include <pa/pinex/common/command_status.hpp>
-#include <pa/pinex/common/serialization.hpp>
-#include <pa/pinex/common/version.hpp>
+#include <pinex/common/bind_type.hpp>
+#include <pinex/common/command_id.hpp>
+#include <pinex/common/command_status.hpp>
+#include <pinex/common/serialization.hpp>
+#include <pinex/common/version.hpp>

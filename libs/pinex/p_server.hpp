@@ -1,8 +1,8 @@
 #pragma once
 
-#include <pa/pinex.hpp>
-#include <pa/pinex/common/helpers.hpp>
-#include <pa/pinex/io/expirator.hpp>
+#include <pinex/pinex.hpp>
+#include <pinex/common/helpers.hpp>
+#include <pinex/io/expirator.hpp>
 
 #include <fmt/core.h>
 #include <map>
@@ -80,7 +80,7 @@ class p_server
             fmt::print("session with id {} is already exist\n", bind_request.system_id);
             return false;
         }
-        
+
         binded_sessions_.insert(std::make_pair(bind_request.system_id, session));
 
         {

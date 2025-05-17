@@ -1,8 +1,8 @@
 #pragma once
 
-#include <pa/smpp/common.hpp>
-#include <pa/smpp/net/detail/flat_buffer.hpp>
-#include <pa/smpp/pdu.hpp>
+#include <smpp/common.hpp>
+#include <smpp/net/detail/flat_buffer.hpp>
+#include <smpp/pdu.hpp>
 
 #include <boost/asio.hpp>
 

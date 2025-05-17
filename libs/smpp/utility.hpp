@@ -1,7 +1,7 @@
 #pragma once
 
-#include <pa/smpp/utility/address.hpp>
-#include <pa/smpp/utility/data_coding_unicode.hpp>
-#include <pa/smpp/utility/short_message.hpp>
-#include <pa/smpp/utility/time_decoder.hpp>
-#include <pa/smpp/utility/unicode_converter.hpp>
+#include <smpp/utility/address.hpp>
+#include <smpp/utility/data_coding_unicode.hpp>
+#include <smpp/utility/short_message.hpp>
+#include <smpp/utility/time_decoder.hpp>
+#include <smpp/utility/unicode_converter.hpp>

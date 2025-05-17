@@ -5,8 +5,8 @@
 #include "src/sgw_definitions.h"
 #include "src/libs/monitoring.hpp"
 
-#include <pa/pinex/net/definitions.hpp>
-#include <pa/pinex/p_client_list.hpp>
+#include <pinex/net/definitions.hpp>
+#include <pinex/p_client_list.hpp>
 
 #include <prometheus/registry.h>
 

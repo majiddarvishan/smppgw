@@ -2,7 +2,7 @@
 #include "src/paper/paper_client.h"
 #include "src/logging/sgw_logger.h"
 
-#include <pa/smpp/utility/unicode_converter.hpp>
+#include <smpp/utility/unicode_converter.hpp>
 
 #include <boost/uuid/uuid.hpp>
 #include <boost/uuid/uuid_generators.hpp>

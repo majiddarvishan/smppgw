@@ -1,8 +1,8 @@
 #pragma once
 
-#include <pa/pinex/common.hpp>
-#include <pa/pinex/net/detail/flat_buffer.hpp>
-#include <pa/pinex/pdu.hpp>
+#include <pinex/common.hpp>
+#include <pinex/net/detail/flat_buffer.hpp>
+#include <pinex/pdu.hpp>
 
 #include <boost/asio.hpp>
 

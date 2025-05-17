@@ -1,8 +1,8 @@
 #pragma once
 
-#include <pa/pinex.hpp>
-#include <pa/pinex/common/helpers.hpp>
-#include <pa/pinex/io/expirator.hpp>
+#include <pinex/pinex.hpp>
+#include <pinex/common/helpers.hpp>
+#include <pinex/io/expirator.hpp>
 
 #include <any>
 #include <map>
@@ -50,7 +50,7 @@ class p_client : public std::enable_shared_from_this<p_client>
                       close_handler_t close_handler = nullptr,
                       session_handler_t session_handler = nullptr)
       : acceptor_(*io_context)
-      , client_id_(id)  
+      , client_id_(id)
       , timeout_sec_{std::chrono::seconds(timeout_sec)}
       , auto_reconnect_{auto_reconnect}
       , request_handler_(std::move(request_handler))

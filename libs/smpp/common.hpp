@@ -1,7 +1,7 @@
 #pragma once
 
-#include <pa/smpp/common/bind_type.hpp>
-#include <pa/smpp/common/command_id.hpp>
-#include <pa/smpp/common/command_status.hpp>
-#include <pa/smpp/common/serialization.hpp>
-#include <pa/smpp/common/version.hpp>
+#include <smpp/common/bind_type.hpp>
+#include <smpp/common/command_id.hpp>
+#include <smpp/common/command_status.hpp>
+#include <smpp/common/serialization.hpp>
+#include <smpp/common/version.hpp>

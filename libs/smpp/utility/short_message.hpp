@@ -1,7 +1,7 @@
 #pragma once
 
-#include <pa/smpp/param/esm_class.hpp>
-#include <pa/smpp/utility/data_coding_unicode.hpp>
+#include <smpp/param/esm_class.hpp>
+#include <smpp/utility/data_coding_unicode.hpp>
 
 #include <algorithm>
 #include <cinttypes>

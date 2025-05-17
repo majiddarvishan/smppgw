@@ -1,7 +1,7 @@
 #pragma once
 
-#include <pa/smpp/common.hpp>
-#include <pa/smpp/param.hpp>
+#include <smpp/common.hpp>
+#include <smpp/param.hpp>
 
 namespace pa::smpp
 {

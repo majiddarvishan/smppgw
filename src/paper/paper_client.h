@@ -3,8 +3,8 @@
 #include "paper/command.pb.h"
 #include "src/libs/monitoring.hpp"
 
-#include <pa/pinex/p_client_list.hpp>
-#include <pa/smpp.hpp>
+#include <pinex/p_client_list.hpp>
+#include <smpp/smpp.hpp>
 
 #include <boost/asio/io_context.hpp>
 #include <prometheus/registry.h>

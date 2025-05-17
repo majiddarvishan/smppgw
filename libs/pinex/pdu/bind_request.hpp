@@ -1,6 +1,6 @@
 #pragma once
 
-#include <pa/pinex/common.hpp>
+#include <pinex/common.hpp>
 
 namespace pa::pinex
 {

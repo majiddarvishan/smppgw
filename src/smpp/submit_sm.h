@@ -3,8 +3,8 @@
 #include "paper/command.pb.h"
 #include "packets/SMPP/SubmitSm.pb.h"
 
-#include <pa/smpp/pdu/submit_sm.hpp>
-#include <pa/smpp/net/session.hpp>
+#include <smpp/pdu/submit_sm.hpp>
+#include <smpp/net/session.hpp>
 
 #include <memory>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <pa/pinex/net/session.hpp>
+#include <pinex/net/session.hpp>
 
 namespace pa::pinex
 {
